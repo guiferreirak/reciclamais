@@ -1,4 +1,4 @@
-package br.com.fiap.reciclamais.gateway.repository.data;
+package br.com.fiap.reciclamais.usecase.data.input.pontuacao;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HistoricoDocument {
+public class RegistroPontuacaoBusinessInput {
 
+    private String uuid;
     private LocalDateTime data;
-    private Integer ponto;
 }

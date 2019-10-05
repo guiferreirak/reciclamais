@@ -16,6 +16,6 @@ public class PontuacaoBusinessInput {
 
     private Double reciclagem;
     private Integer total;
-    private Float percentual;
+    private Double percentual;
     private List<HistoricoBusinessInput> historico;
 }

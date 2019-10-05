@@ -25,4 +25,16 @@ public class EnderecoUseCaseConverterImpl implements EnderecoUseCaseConverter {
                 .build();
     }
 
+    @Override
+    public EnderecoDocument parseEndereco(EnderecoDocument endereco) {
+        return EnderecoDocument
+                .builder()
+                .cep(endereco.getCep())
+                .rua(endereco.getRua())
+                .numero(endereco.getNumero())
+                .estado(endereco.getEstado())
+                .cidade(endereco.getCidade())
+                .build();
+    }
+
 }

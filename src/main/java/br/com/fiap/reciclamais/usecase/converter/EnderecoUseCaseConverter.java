@@ -6,4 +6,6 @@ import br.com.fiap.reciclamais.usecase.data.input.EnderecoBusinessInput;
 public interface EnderecoUseCaseConverter {
 
     EnderecoDocument parseEndereco(EnderecoBusinessInput endereco);
+
+    EnderecoDocument parseEndereco(EnderecoDocument endereco);
 }

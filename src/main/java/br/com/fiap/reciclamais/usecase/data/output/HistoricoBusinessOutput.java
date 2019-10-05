@@ -14,5 +14,5 @@ import java.time.LocalDate;
 public class HistoricoBusinessOutput {
 
     private LocalDate data;
-    private Double ponto;
+    private Integer ponto;
 }
