@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,6 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class HistoricoBusinessOutput {
 
-    private LocalDate data;
+    private LocalDateTime data;
     private Integer ponto;
 }

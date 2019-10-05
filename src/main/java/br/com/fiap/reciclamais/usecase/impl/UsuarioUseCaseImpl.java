@@ -7,8 +7,10 @@ import br.com.fiap.reciclamais.usecase.converter.UsuarioUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.data.input.UsuarioBusinessInput;
 import br.com.fiap.reciclamais.usecase.data.input.UsuarioLoginBusinessInput;
 import br.com.fiap.reciclamais.usecase.data.input.pontuacao.RegistroPontuacaoBusinessInput;
+import br.com.fiap.reciclamais.usecase.data.output.HistoricoBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.UsuarioBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.UsuarioLoginBusinessOutput;
+import br.com.fiap.reciclamais.usecase.data.output.pontuacao.PontuacaoUsuarioBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.pontuacao.RegistroPontuacaoBusinessOutput;
 import br.com.fiap.reciclamais.utils.exception.LoginInvalidoException;
 import br.com.fiap.reciclamais.utils.exception.UsuarioExistenteException;
@@ -89,6 +91,32 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
                     .builder()
                     .descricao(PONTUACAO_SUCESSO)
                     .build();
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<HistoricoBusinessOutput> getHistoricoPontuacao(String cpf) throws Exception {
+        try {
+            UsuarioDocument usuarioDocument = usuarioRepository.findByCpf(cpf);
+
+            List<HistoricoBusinessOutput> historicoPontuacao = usuarioConverter.toListHistoricoBusinessOutput(usuarioDocument);
+
+            return historicoPontuacao;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public PontuacaoUsuarioBusinessOutput getPontuacao(String cpf) throws Exception {
+        try {
+            UsuarioDocument usuarioDocument = usuarioRepository.findByCpf(cpf);
+
+            PontuacaoUsuarioBusinessOutput pontuacaoUsuario = usuarioConverter.toPontuacaoUsuarioBusinessOutput(usuarioDocument);
+
+            return pontuacaoUsuario;
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }

@@ -1,17 +1,22 @@
 package br.com.fiap.reciclamais.usecase.converter.impl;
 
+import br.com.fiap.reciclamais.gateway.repository.data.HistoricoDocument;
+import br.com.fiap.reciclamais.gateway.repository.data.PontuacaoDocument;
 import br.com.fiap.reciclamais.gateway.repository.data.UsuarioDocument;
 import br.com.fiap.reciclamais.usecase.converter.EnderecoUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.converter.UsuarioPontuacaoUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.converter.UsuarioUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.data.input.UsuarioBusinessInput;
 import br.com.fiap.reciclamais.usecase.data.input.pontuacao.RegistroPontuacaoBusinessInput;
+import br.com.fiap.reciclamais.usecase.data.output.HistoricoBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.UsuarioLoginBusinessOutput;
+import br.com.fiap.reciclamais.usecase.data.output.pontuacao.PontuacaoUsuarioBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.pontuacao.RegistroPontuacaoBusinessOutput;
 import br.com.fiap.reciclamais.utils.enums.PerfilUsuarioEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +29,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
 
     private static final String PONTUACAO_FALHA = "Pontuações registradas com falhas";
+    private static final Integer ZERO = 0;
 
     private final EnderecoUseCaseConverter enderecoConverter;
     private final UsuarioPontuacaoUseCaseConverter pontuacaoConverter;
@@ -88,6 +94,59 @@ public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
                 .usuarios(uuids)
                 .descricao(PONTUACAO_FALHA)
                 .build();
+    }
+
+    @Override
+    public List<HistoricoBusinessOutput> toListHistoricoBusinessOutput(UsuarioDocument usuarioDocument) {
+        if(isNull(usuarioDocument) || isNull(usuarioDocument.getPontuacao())
+                || isNull(usuarioDocument.getPontuacao().getHistorico()))
+            return Collections.emptyList();
+
+        List<HistoricoDocument> historicoDocument = usuarioDocument.getPontuacao().getHistorico();
+
+        return historicoDocument.stream().map(this::parseToHistoricoBusiness).collect(Collectors.toList());
+    }
+
+    @Override
+    public PontuacaoUsuarioBusinessOutput toPontuacaoUsuarioBusinessOutput(UsuarioDocument usuarioDocument) {
+        if (isNull(usuarioDocument))
+            return null;
+
+        return PontuacaoUsuarioBusinessOutput
+                .builder()
+                .cpf(usuarioDocument.getCpf())
+                .nome(usuarioDocument.getNome())
+                .pontuacaoTotal(getPontuacaoTotal(usuarioDocument.getPontuacao()))
+                .reciclagemTotal(getReciclagemTotal(usuarioDocument.getPontuacao()))
+                .build();
+    }
+
+    private HistoricoBusinessOutput parseToHistoricoBusiness(HistoricoDocument historicoDocument) {
+        if(isNull(historicoDocument))
+            return null;
+
+        return HistoricoBusinessOutput
+                .builder()
+                .data(historicoDocument.getData())
+                .ponto(historicoDocument.getPonto())
+                .build();
+    }
+
+    private Integer getPontuacaoTotal(PontuacaoDocument pontuacao) {
+        if (isNull(pontuacao))
+            return ZERO;
+
+        return pontuacao.getTotal();
+    }
+
+    private Integer getReciclagemTotal(PontuacaoDocument pontuacao) {
+        if (isNull(pontuacao))
+            return ZERO;
+
+        if (isEmpty(pontuacao.getHistorico()))
+            return ZERO;
+
+        return pontuacao.getHistorico().size();
     }
 
     private String parseUuids(UsuarioDocument usuarioDocument) {
