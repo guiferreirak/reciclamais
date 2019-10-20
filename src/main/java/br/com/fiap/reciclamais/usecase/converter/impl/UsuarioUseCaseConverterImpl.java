@@ -1,5 +1,6 @@
 package br.com.fiap.reciclamais.usecase.converter.impl;
 
+import br.com.fiap.reciclamais.config.data.ErroMessagesConfigurationProperties;
 import br.com.fiap.reciclamais.gateway.repository.data.HistoricoDocument;
 import br.com.fiap.reciclamais.gateway.repository.data.PontuacaoDocument;
 import br.com.fiap.reciclamais.gateway.repository.data.UsuarioDocument;
@@ -7,9 +8,11 @@ import br.com.fiap.reciclamais.usecase.converter.EnderecoUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.converter.UsuarioPontuacaoUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.converter.UsuarioUseCaseConverter;
 import br.com.fiap.reciclamais.usecase.data.input.UsuarioBusinessInput;
+import br.com.fiap.reciclamais.usecase.data.input.atualiza.UsuarioAtualizaBusinessInput;
 import br.com.fiap.reciclamais.usecase.data.input.pontuacao.RegistroPontuacaoBusinessInput;
 import br.com.fiap.reciclamais.usecase.data.output.HistoricoBusinessOutput;
-import br.com.fiap.reciclamais.usecase.data.output.UsuarioLoginBusinessOutput;
+import br.com.fiap.reciclamais.usecase.data.output.UsuarioBusinessOutput;
+import br.com.fiap.reciclamais.usecase.data.output.login.UsuarioLoginBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.pontuacao.PontuacaoUsuarioBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.pontuacao.RegistroPontuacaoBusinessOutput;
 import br.com.fiap.reciclamais.utils.enums.PerfilUsuarioEnum;
@@ -28,9 +31,9 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @RequiredArgsConstructor
 public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
 
-    private static final String PONTUACAO_FALHA = "Pontuações registradas com falhas";
     private static final Integer ZERO = 0;
 
+    private final ErroMessagesConfigurationProperties erroMessageProperties;
     private final EnderecoUseCaseConverter enderecoConverter;
     private final UsuarioPontuacaoUseCaseConverter pontuacaoConverter;
 
@@ -92,7 +95,7 @@ public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
         return RegistroPontuacaoBusinessOutput
                 .builder()
                 .usuarios(uuids)
-                .descricao(PONTUACAO_FALHA)
+                .descricao(erroMessageProperties.getPontuacao())
                 .build();
     }
 
@@ -118,6 +121,55 @@ public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
                 .nome(usuarioDocument.getNome())
                 .pontuacaoTotal(getPontuacaoTotal(usuarioDocument.getPontuacao()))
                 .reciclagemTotal(getReciclagemTotal(usuarioDocument.getPontuacao()))
+                .build();
+    }
+
+    @Override
+    public UsuarioBusinessOutput toUsuarioBusinessOutput(UsuarioDocument usuarioDocument) {
+        if (isNull(usuarioDocument))
+            return null;
+
+        return UsuarioBusinessOutput
+                .builder()
+                .uuid(usuarioDocument.getUuid())
+                .nome(usuarioDocument.getNome())
+                .email(usuarioDocument.getEmail())
+                .cpf(usuarioDocument.getCpf())
+                .perfil(usuarioDocument.getPerfil())
+                .senha(usuarioDocument.getSenha())
+                .endereco(enderecoConverter.parseToEnderecoBusinessOutput(usuarioDocument))
+                .pontuacao(pontuacaoConverter.parseToPontuacaoBusinessOutput(usuarioDocument))
+                .build();
+    }
+
+    @Override
+    public UsuarioDocument toUsuarioAtualizaDocument(UsuarioDocument usuarioDocument, UsuarioAtualizaBusinessInput usuarioBusinessInput) {
+
+        return UsuarioDocument
+                .builder()
+                .uuid(usuarioDocument.getUuid())
+                .nome(usuarioBusinessInput.getNome())
+                .email(usuarioBusinessInput.getEmail())
+                .cpf(usuarioDocument.getCpf())
+                .perfil(usuarioDocument.getPerfil())
+                .senha(usuarioBusinessInput.getSenha())
+                .endereco(enderecoConverter.parseEndereco(usuarioBusinessInput.getEndereco()))
+                .pontuacao(usuarioDocument.getPontuacao())
+                .build();
+    }
+
+    @Override
+    public UsuarioDocument toTrocaPontuacaoUsuarioDocument(UsuarioDocument usuarioDocument, Integer pontuacao) {
+        return UsuarioDocument
+                .builder()
+                .uuid(usuarioDocument.getUuid())
+                .nome(usuarioDocument.getNome())
+                .email(usuarioDocument.getEmail())
+                .cpf(usuarioDocument.getCpf())
+                .perfil(usuarioDocument.getPerfil())
+                .senha(usuarioDocument.getSenha())
+                .endereco(enderecoConverter.parseEndereco(usuarioDocument.getEndereco()))
+                .pontuacao(pontuacaoConverter.parseTrocaPontuacao(pontuacao))
                 .build();
     }
 

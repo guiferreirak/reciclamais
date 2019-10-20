@@ -1,6 +1,17 @@
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: reciclamais
+#spring:
+#  data:
+#    mongodb:
+#      uri: mongodb+srv://developer:developer@reciclamais-npy5o.mongodb.net/test?retryWrites=true&w=majority
+
+messages:
+  exception:
+    loginInvalido: "Usuario ou senha incorreto"
+    cpfExistente: "CPF ja possui cadastro"
+    emailExistente: "Email ja possui cadastro"
+    erroInterno: "Ocorreu um erro interno, entre em contato com nossos canais de atendimento"
+    usuarioNaoEncontrado: "Impossivel realizar a troca, usuario nao encontrado!"
+    pontuacaoInsuficiente: "Pontuacao atual insuficiente para realizar a troca"
+  sucesso:
+    pontuacao: "Pontuacoes registradas com sucesso"
+  erro:
+    pontuacao: "Pontuacoes registradas com falhas"

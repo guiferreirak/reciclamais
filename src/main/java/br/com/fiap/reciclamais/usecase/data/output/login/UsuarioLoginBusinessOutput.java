@@ -1,4 +1,4 @@
-package br.com.fiap.reciclamais.entrypoints.data.response.login;
+package br.com.fiap.reciclamais.usecase.data.output.login;
 
 import br.com.fiap.reciclamais.utils.enums.PerfilUsuarioEnum;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioLoginContractResponse {
+public class UsuarioLoginBusinessOutput {
 
     private String nome;
     private PerfilUsuarioEnum perfil;

@@ -1,4 +1,4 @@
-package br.com.fiap.reciclamais.usecase.data.input;
+package br.com.fiap.reciclamais.usecase.data.input.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

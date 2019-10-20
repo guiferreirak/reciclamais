@@ -2,7 +2,9 @@ package br.com.fiap.reciclamais.entrypoints.converter.impl;
 
 import br.com.fiap.reciclamais.entrypoints.converter.PontuacaoHttpConverter;
 import br.com.fiap.reciclamais.entrypoints.data.request.pontuacao.RegistroPontuacaoContractRequest;
+import br.com.fiap.reciclamais.entrypoints.data.request.pontuacao.TrocaPontuacaoContractRequest;
 import br.com.fiap.reciclamais.usecase.data.input.pontuacao.RegistroPontuacaoBusinessInput;
+import br.com.fiap.reciclamais.usecase.data.input.pontuacao.TrocaPontuacaoBusinessInput;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +21,18 @@ public class PontuacaoHttpConverterImpl implements PontuacaoHttpConverter {
             return null;
 
         return pontuacoes.stream().map(this::toRegistroPontuacaoBusinessInput).collect(Collectors.toList());
+    }
+
+    @Override
+    public TrocaPontuacaoBusinessInput toTrocaPontuacaoBusinessInput(TrocaPontuacaoContractRequest request) {
+        if (isNull(request))
+            return null;
+
+        return TrocaPontuacaoBusinessInput
+                .builder()
+                .cpf(request.getCpf())
+                .voucher(request.getVoucher())
+                .build();
     }
 
     private RegistroPontuacaoBusinessInput toRegistroPontuacaoBusinessInput(RegistroPontuacaoContractRequest pontuacao) {

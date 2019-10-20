@@ -10,5 +10,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends MongoRepository<UsuarioDocument, String> {
 
     UsuarioDocument findByCpf(String cpf);
+
     UsuarioDocument findByEmail(String email);
+
+    void deleteByCpf(String cpf);
 }
