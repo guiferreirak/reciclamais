@@ -76,6 +76,8 @@ public class UsuarioController {
             UsuarioContractResponse usuarioResponse = usuarioConverter.toUsuarioContractResponse(usuarioBusiness);
 
             return ResponseEntity.ok().body(httpConverter.toHttpSuccess(usuarioResponse));
+        } catch (UsuarioInexistenteException e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(httpConverter.toHttpException(e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(httpConverter.toHttpException(e.getMessage()));
         }

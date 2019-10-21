@@ -15,6 +15,7 @@ messages:
     erroInterno: "Ocorreu um erro interno, entre em contato com nossos canais de atendimento"
     usuarioNaoEncontrado: "Impossivel realizar a troca, usuario nao encontrado!"
     pontuacaoInsuficiente: "Pontuacao atual insuficiente para realizar a troca"
+    usuarioNaoCadastrado: "Usuario nao encontrado"
   sucesso:
     pontuacao: "Pontuacoes registradas com sucesso"
   erro:

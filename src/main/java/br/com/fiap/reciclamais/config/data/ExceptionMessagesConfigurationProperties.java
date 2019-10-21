@@ -34,5 +34,8 @@ public class ExceptionMessagesConfigurationProperties {
 
     @NotNull
     private String pontuacaoInsuficiente;
+
+    @NotNull
+    private String usuarioNaoCadastrado;
 }
 

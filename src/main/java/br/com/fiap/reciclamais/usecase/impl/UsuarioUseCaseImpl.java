@@ -73,9 +73,14 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
         try {
             UsuarioDocument usuarioDocument = usuarioRepository.findByCpf(cpf);
 
+            if (isNull(usuarioDocument))
+                throw new UsuarioInexistenteException(exceptionMessageProperties.getUsuarioNaoCadastrado());
+
             UsuarioBusinessOutput usuarioBusiness = usuarioConverter.toUsuarioBusinessOutput(usuarioDocument);
 
             return usuarioBusiness;
+        } catch (UsuarioInexistenteException e) {
+            throw new UsuarioInexistenteException(e.getMessage());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
