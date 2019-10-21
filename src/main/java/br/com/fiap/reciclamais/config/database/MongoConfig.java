@@ -8,7 +8,8 @@
 //@Configuration
 //public class MongoConfig {
 //
-//    private static final String URI = "mongodb+srv://developer:developer@reciclamais-npy5o.mongodb.net/test?retryWrites=true&w=majority";
+//    //private static final String URI = "mongodb+srv://developer:developer@reciclamais-npy5o.mongodb.net/test?retryWrites=true&w=majority";
+//    private static final String URI = "mongodb://developer:developer123@ds137488.mlab.com:37488/heroku_qh597p5f?authSource=admin&authMechanism=SCRAM-SHA-1";
 //
 //    @Bean
 //    public MongoClient connectionFactory(){
