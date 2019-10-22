@@ -66,13 +66,13 @@ public class UsuarioPontuacaoUseCaseConverterImpl implements UsuarioPontuacaoUse
     }
 
     @Override
-    public PontuacaoDocument parseTrocaPontuacao(Integer pontuacao) {
+    public PontuacaoDocument parseTrocaPontuacao(UsuarioDocument usuarioDocument, Integer pontuacao) {
         return PontuacaoDocument
                 .builder()
                 .reciclagem(VINTE)
                 .total(pontuacao)
                 .percentual(UM)
-                .historico(emptyList())
+                .historico(usuarioDocument.getPontuacao().getHistorico())
                 .build();
     }
 

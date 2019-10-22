@@ -169,7 +169,7 @@ public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
                 .perfil(usuarioDocument.getPerfil())
                 .senha(usuarioDocument.getSenha())
                 .endereco(enderecoConverter.parseEndereco(usuarioDocument.getEndereco()))
-                .pontuacao(pontuacaoConverter.parseTrocaPontuacao(pontuacao))
+                .pontuacao(pontuacaoConverter.parseTrocaPontuacao(usuarioDocument, pontuacao))
                 .build();
     }
 

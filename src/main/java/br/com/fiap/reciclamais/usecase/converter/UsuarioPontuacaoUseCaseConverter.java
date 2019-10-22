@@ -16,5 +16,5 @@ public interface UsuarioPontuacaoUseCaseConverter {
 
     PontuacaoBusinessOutput parseToPontuacaoBusinessOutput(UsuarioDocument usuarioDocument);
 
-    PontuacaoDocument parseTrocaPontuacao(Integer pontuacao);
+    PontuacaoDocument parseTrocaPontuacao(UsuarioDocument usuarioDocument, Integer pontuacao);
 }
