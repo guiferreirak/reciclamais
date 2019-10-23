@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static br.com.fiap.reciclamais.utils.enums.PerfilUsuarioEnum.FUNCIONARIO;
 import static java.util.Objects.isNull;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -170,6 +171,20 @@ public class UsuarioUseCaseConverterImpl implements UsuarioUseCaseConverter {
                 .senha(usuarioDocument.getSenha())
                 .endereco(enderecoConverter.parseEndereco(usuarioDocument.getEndereco()))
                 .pontuacao(pontuacaoConverter.parseTrocaPontuacao(usuarioDocument, pontuacao))
+                .build();
+    }
+
+    @Override
+    public UsuarioDocument toAlterarPerfilUsuarioDocument(UsuarioDocument usuarioDocument) {
+        return UsuarioDocument
+                .builder()
+                .uuid(usuarioDocument.getUuid())
+                .nome(usuarioDocument.getNome())
+                .email(usuarioDocument.getEmail())
+                .cpf(usuarioDocument.getCpf())
+                .perfil(FUNCIONARIO)
+                .senha(usuarioDocument.getSenha())
+                .endereco(enderecoConverter.parseEndereco(usuarioDocument.getEndereco()))
                 .build();
     }
 

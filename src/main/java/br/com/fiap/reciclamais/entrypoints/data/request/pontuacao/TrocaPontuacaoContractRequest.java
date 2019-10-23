@@ -10,7 +10,6 @@ import org.springframework.validation.annotation.Validated;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Validated
 public class TrocaPontuacaoContractRequest {
 
     private String cpf;
