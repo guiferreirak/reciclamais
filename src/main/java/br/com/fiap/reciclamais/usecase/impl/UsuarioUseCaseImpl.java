@@ -10,6 +10,7 @@ import br.com.fiap.reciclamais.usecase.data.input.atualiza.UsuarioAtualizaBusine
 import br.com.fiap.reciclamais.usecase.data.input.login.UsuarioLoginBusinessInput;
 import br.com.fiap.reciclamais.usecase.data.output.UsuarioBusinessOutput;
 import br.com.fiap.reciclamais.usecase.data.output.login.UsuarioLoginBusinessOutput;
+import br.com.fiap.reciclamais.utils.enums.PerfilUsuarioEnum;
 import br.com.fiap.reciclamais.utils.exception.LoginInvalidoException;
 import br.com.fiap.reciclamais.utils.exception.UsuarioExistenteException;
 import br.com.fiap.reciclamais.utils.exception.UsuarioInexistenteException;
@@ -22,6 +23,10 @@ import static java.util.Objects.nonNull;
 @Component
 @RequiredArgsConstructor
 public class UsuarioUseCaseImpl implements UsuarioUseCase {
+
+    private static final String USUARIO_IS_FUNCIONARIO = "Este usuario ja é um Funcionario!";
+    private static final String USUARIO_IS_ADMINISTRADOR = "Usuario nao pode ser alterado";
+    private static final String USUARIO_UPDATED = "Usuario se tornou um Funcionario";
 
     private final ExceptionMessagesConfigurationProperties exceptionMessageProperties;
     private final UsuarioRepository usuarioRepository;
@@ -114,6 +119,25 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
             usuarioRepository.deleteByCpf(cpf);
 
         }catch (Exception e ){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public String alterarPerfilUsuario(String cpf) throws Exception {
+        
+        try {
+            UsuarioDocument usuarioDocument = usuarioRepository.findByCpf(cpf);
+
+            if (usuarioDocument.getPerfil().getCodigo().equals(PerfilUsuarioEnum.FUNCIONARIO.getCodigo()))
+                return USUARIO_IS_FUNCIONARIO;
+            if (usuarioDocument.getPerfil().getCodigo().equals(PerfilUsuarioEnum.ADMINISTRADOR.getCodigo()))
+                return USUARIO_IS_ADMINISTRADOR;
+            
+            usuarioRepository.save(usuarioConverter.toAlterarPerfilUsuarioDocument(usuarioDocument));
+            
+            return USUARIO_UPDATED;
+        }catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }

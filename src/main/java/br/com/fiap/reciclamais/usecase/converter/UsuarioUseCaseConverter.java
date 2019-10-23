@@ -31,4 +31,6 @@ public interface UsuarioUseCaseConverter {
     UsuarioDocument toUsuarioAtualizaDocument(UsuarioDocument usuarioDocument, UsuarioAtualizaBusinessInput usuarioBusinessInput);
 
     UsuarioDocument toTrocaPontuacaoUsuarioDocument(UsuarioDocument usuarioDocument, Integer pontuacao);
+
+    UsuarioDocument toAlterarPerfilUsuarioDocument(UsuarioDocument usuarioDocument);
 }

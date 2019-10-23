@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -72,7 +71,7 @@ public class PontuacaoController {
     }
 
     @PostMapping("trocar")
-    public ResponseEntity<HttpContractResponseWrapper> trocarPontuacao(@RequestBody @Valid TrocaPontuacaoContractRequest request) throws UsuarioInexistenteException, PontuacaoInsuficienteException {
+    public ResponseEntity<HttpContractResponseWrapper> trocarPontuacao(@RequestBody TrocaPontuacaoContractRequest request) throws UsuarioInexistenteException, PontuacaoInsuficienteException {
 
         try {
             TrocaPontuacaoBusinessInput pontuacaoBusiness = pontuacaoConverter.toTrocaPontuacaoBusinessInput(request);

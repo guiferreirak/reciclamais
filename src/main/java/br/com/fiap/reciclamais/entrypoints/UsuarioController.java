@@ -34,7 +34,7 @@ public class UsuarioController {
     private final HttpConverterWrapper httpConverter;
 
     @PostMapping("login")
-    public ResponseEntity<HttpContractResponseWrapper> login(@RequestBody UsuarioLoginContractRequest usuario) {
+    public ResponseEntity<HttpContractResponseWrapper> login(@RequestBody @Valid UsuarioLoginContractRequest usuario) {
 
         try {
             UsuarioLoginBusinessInput usuarioBusinessInput = usuarioConverter.toUsuarioLoginBusinessInput(usuario);
@@ -108,6 +108,19 @@ public class UsuarioController {
 
             return ResponseEntity.ok().body(httpConverter.toHttpSuccess("Usuario excluido com sucesso"));
         }catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(httpConverter.toHttpException(e.getMessage()));
+        }
+    }
+
+    @PatchMapping("{id}/alterar-perfil")
+    public ResponseEntity<HttpContractResponseWrapper> alterarPerfilUsuario(@PathVariable("id") String cpf) {
+
+        try {
+
+            String response = usuarioUseCase.alterarPerfilUsuario(cpf);
+
+            return ResponseEntity.ok().body(httpConverter.toHttpSuccess(response));
+        } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(httpConverter.toHttpException(e.getMessage()));
         }
     }
