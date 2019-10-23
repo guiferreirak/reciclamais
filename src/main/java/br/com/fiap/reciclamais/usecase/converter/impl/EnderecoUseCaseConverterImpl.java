@@ -22,6 +22,7 @@ public class EnderecoUseCaseConverterImpl implements EnderecoUseCaseConverter {
                 .cep(endereco.getCep())
                 .rua(endereco.getRua())
                 .numero(endereco.getNumero())
+                .bairro(endereco.getBairro())
                 .estado(endereco.getEstado())
                 .cidade(endereco.getCidade())
                 .build();
@@ -49,6 +50,7 @@ public class EnderecoUseCaseConverterImpl implements EnderecoUseCaseConverter {
                 .cep(usuarioDocument.getEndereco().getCep())
                 .rua(usuarioDocument.getEndereco().getRua())
                 .numero(usuarioDocument.getEndereco().getNumero())
+                .bairro(usuarioDocument.getEndereco().getBairro())
                 .cidade(usuarioDocument.getEndereco().getCidade())
                 .estado(usuarioDocument.getEndereco().getEstado())
                 .build();

@@ -15,5 +15,6 @@ public class EnderecoDocument {
     private String rua;
     private Integer numero;
     private String cidade;
+    private String bairro;
     private String estado;
 }

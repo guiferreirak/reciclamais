@@ -14,6 +14,7 @@ public class EnderecoContractResponse {
     private String cep;
     private String rua;
     private Integer numero;
+    private String bairro;
     private String cidade;
     private String estado;
 }

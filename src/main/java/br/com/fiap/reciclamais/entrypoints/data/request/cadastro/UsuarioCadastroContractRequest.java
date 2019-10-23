@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Validated
 public class UsuarioCadastroContractRequest {
 
     private String nome;
@@ -18,6 +20,7 @@ public class UsuarioCadastroContractRequest {
     private String cep;
     private String rua;
     private Integer numero;
+    private String bairro;
     private String estado;
     private String cidade;
 }

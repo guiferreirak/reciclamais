@@ -50,7 +50,7 @@ public class UsuarioController {
     }
 
     @PostMapping("cadastrar")
-    public ResponseEntity<HttpContractResponseWrapper> cadastrarUsuario(@RequestBody UsuarioCadastroContractRequest usuario) {
+    public ResponseEntity<HttpContractResponseWrapper> cadastrarUsuario(@RequestBody @Valid UsuarioCadastroContractRequest usuario) {
 
         try {
 

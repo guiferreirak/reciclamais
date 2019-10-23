@@ -20,6 +20,7 @@ public class UsuarioAtualizaContractRequest {
     private String cep;
     private String rua;
     private Integer numero;
+    private String bairro;
     private String estado;
     private String cidade;
 }

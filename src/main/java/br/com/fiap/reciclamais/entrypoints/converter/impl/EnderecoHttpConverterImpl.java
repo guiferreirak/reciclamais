@@ -12,12 +12,13 @@ import static java.util.Objects.isNull;
 public class EnderecoHttpConverterImpl implements EnderecoHttpConverter {
 
     @Override
-    public EnderecoBusinessInput parseEndereco(String cep, String rua, Integer numero, String estado, String cidade) {
+    public EnderecoBusinessInput parseEndereco(String cep, String rua, Integer numero, String bairro, String estado, String cidade) {
         return EnderecoBusinessInput
                 .builder()
                 .cep(cep)
                 .rua(rua)
                 .numero(numero)
+                .bairro(bairro)
                 .estado(estado)
                 .cidade(cidade)
                 .build();
@@ -33,6 +34,7 @@ public class EnderecoHttpConverterImpl implements EnderecoHttpConverter {
                 .cep(enderecoBusiness.getCep())
                 .rua(enderecoBusiness.getRua())
                 .numero(enderecoBusiness.getNumero())
+                .bairro(enderecoBusiness.getBairro())
                 .cidade(enderecoBusiness.getCidade())
                 .estado(enderecoBusiness.getEstado())
                 .build();

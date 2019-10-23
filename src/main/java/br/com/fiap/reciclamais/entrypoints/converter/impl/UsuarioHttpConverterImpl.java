@@ -45,7 +45,7 @@ public class UsuarioHttpConverterImpl implements UsuarioHttpConverter {
                 .senha(usuarioRequest.getSenha())
                 .cpf(usuarioRequest.getCpf())
                 .endereco(enderecoConverter.parseEndereco(usuarioRequest.getCep(), usuarioRequest.getRua(),
-                        usuarioRequest.getNumero(), usuarioRequest.getEstado(), usuarioRequest.getCidade()))
+                        usuarioRequest.getNumero(), usuarioRequest.getBairro(), usuarioRequest.getEstado(), usuarioRequest.getCidade()))
                 .build();
     }
 
@@ -75,7 +75,7 @@ public class UsuarioHttpConverterImpl implements UsuarioHttpConverter {
                 .senha(request.getSenha())
                 .cpf(request.getCpf())
                 .endereco(enderecoConverter.parseEndereco(request.getCep(), request.getRua(),
-                        request.getNumero(), request.getEstado(), request.getCidade()))
+                        request.getNumero(), request.getBairro(), request.getEstado(), request.getCidade()))
                 .build();
     }
 }
