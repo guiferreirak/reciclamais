@@ -90,9 +90,9 @@ public class UsuarioController {
 
             UsuarioAtualizaBusinessInput usuarioBusinessInput = usuarioConverter.toUsuarioAtualizaBusinessInput(request);
 
-            usuarioUseCase.atualizarUsuario(usuarioBusinessInput);
+            String response = usuarioUseCase.atualizarUsuario(usuarioBusinessInput);
 
-            return ResponseEntity.ok().body(httpConverter.toHttpSuccess("Usuario atualizado com sucesso"));
+            return ResponseEntity.ok().body(httpConverter.toHttpSuccess(response));
         } catch (UsuarioInexistenteException e){
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(httpConverter.toHttpException(e.getMessage()));
         } catch (Exception e) {

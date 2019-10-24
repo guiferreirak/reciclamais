@@ -19,4 +19,7 @@ public class SucessoMessagesConfigurationProperties {
 
     @NotNull
     private String pontuacao;
+
+    @NotNull
+    private String usuarioAtualizado;
 }

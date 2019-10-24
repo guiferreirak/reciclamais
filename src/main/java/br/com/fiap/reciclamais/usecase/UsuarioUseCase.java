@@ -14,7 +14,7 @@ public interface UsuarioUseCase {
 
     UsuarioBusinessOutput getUsuario(String cpf) throws Exception;
 
-    UsuarioBusinessOutput atualizarUsuario(UsuarioAtualizaBusinessInput usuarioBusinessInput) throws Exception;
+    String atualizarUsuario(UsuarioAtualizaBusinessInput usuarioBusinessInput) throws Exception;
 
     void deletarUsuario(String cpf) throws Exception;
 

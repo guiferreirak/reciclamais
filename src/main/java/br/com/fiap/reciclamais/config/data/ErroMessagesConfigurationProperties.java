@@ -19,4 +19,7 @@ public class ErroMessagesConfigurationProperties {
 
     @NotNull
     private String pontuacao;
+
+    @NotNull
+    private String emailDuplicado;
 }

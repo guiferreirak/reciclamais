@@ -18,5 +18,7 @@ messages:
     usuarioNaoCadastrado: "Usuario nao encontrado"
   sucesso:
     pontuacao: "Pontuacoes registradas com sucesso"
+    usuarioAtualizado: "Usuario atualizado com sucesso"
   erro:
     pontuacao: "Pontuacoes registradas com falhas"
+    emailDuplicado: "Email já cadastrado! Favor insira outro email"

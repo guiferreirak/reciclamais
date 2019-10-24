@@ -1,6 +1,8 @@
 package br.com.fiap.reciclamais.usecase.impl;
 
+import br.com.fiap.reciclamais.config.data.ErroMessagesConfigurationProperties;
 import br.com.fiap.reciclamais.config.data.ExceptionMessagesConfigurationProperties;
+import br.com.fiap.reciclamais.config.data.SucessoMessagesConfigurationProperties;
 import br.com.fiap.reciclamais.gateway.repository.UsuarioRepository;
 import br.com.fiap.reciclamais.gateway.repository.data.UsuarioDocument;
 import br.com.fiap.reciclamais.usecase.UsuarioUseCase;
@@ -15,6 +17,7 @@ import br.com.fiap.reciclamais.utils.exception.LoginInvalidoException;
 import br.com.fiap.reciclamais.utils.exception.UsuarioExistenteException;
 import br.com.fiap.reciclamais.utils.exception.UsuarioInexistenteException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
@@ -29,6 +32,8 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
     private static final String USUARIO_UPDATED = "Usuario se tornou um Funcionario";
 
     private final ExceptionMessagesConfigurationProperties exceptionMessageProperties;
+    private final ErroMessagesConfigurationProperties erroMessagesProperties;
+    private final SucessoMessagesConfigurationProperties sucessoMessagesProperties;
     private final UsuarioRepository usuarioRepository;
     private final UsuarioUseCaseConverter usuarioConverter;
 
@@ -92,7 +97,7 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
     }
 
     @Override
-    public UsuarioBusinessOutput atualizarUsuario(UsuarioAtualizaBusinessInput usuarioBusinessInput) throws Exception {
+    public String atualizarUsuario(UsuarioAtualizaBusinessInput usuarioBusinessInput) throws Exception {
 
         try {
             UsuarioDocument usuarioDocument = usuarioRepository.findByCpf(usuarioBusinessInput.getCpf());
@@ -104,12 +109,13 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
 
             usuarioRepository.save(usuarioAtualizadoInput);
 
-            return null;
         } catch (UsuarioInexistenteException e) {
             throw new UsuarioInexistenteException(e.getMessage());
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            tratarDuplicateKeyError(e);
         }
+
+        return sucessoMessagesProperties.getUsuarioAtualizado();
     }
 
     @Override
@@ -147,6 +153,13 @@ public class UsuarioUseCaseImpl implements UsuarioUseCase {
                 !usuarioDocument.getSenha().equals(usuarioBusiness.getSenha())) {
             throw new LoginInvalidoException(exceptionMessageProperties.getLoginInvalido());
         }
+    }
+
+    private String tratarDuplicateKeyError(Exception e) throws Exception {
+        if (e.getMessage().contains("email"))
+            throw new Exception(erroMessagesProperties.getEmailDuplicado());
+
+        throw new Exception(exceptionMessageProperties.getErroInterno());
     }
 
 }
